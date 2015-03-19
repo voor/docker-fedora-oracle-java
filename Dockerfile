@@ -17,6 +17,7 @@ FROM fedora:latest
 # From https://github.com/tifayuki/docker-image-java/blob/master/7/Dockerfile
 # Which was found from https://github.com/Netflix-Skunkworks/zerotodocker
 # Then modified for a Fedora environment rather than Ubuntu
+# Then further modified from https://github.com/dockerfile/java/blob/master/openjdk-6-jdk/Dockerfile
 
 # Install Oracle Java 8
 ENV JAVA_VER 8
@@ -28,3 +29,6 @@ RUN yum install -y wget && \
     yum erase -y wget && \
     rm -rf jdk-8u40-linux-x64.rpm && \
     java -version
+
+# Define default command.
+CMD ["bash"]
