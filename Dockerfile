@@ -23,11 +23,12 @@ FROM fedora:latest
 ENV JAVA_VER 8
 ENV JAVA_HOME /usr/java/latest
 
-RUN yum install -y wget && \
-    wget --no-cookies --header "Cookie: gpw_e24=xxx; oraclelicense=accept-securebackup-cookie;" http://download.oracle.com/otn-pub/java/jdk/8u40-b26/jdk-8u40-linux-x64.rpm && \
-    yum install -y jdk-8u40-linux-x64.rpm && \
-    yum erase -y wget && \
-    rm -rf jdk-8u40-linux-x64.rpm && \
+## You must accept the Oracle Binary Code License Agreement for Java SE to download this software.
+## Read more here: http://www.oracle.com/technetwork/java/javase/terms/license/index.html
+## Based off the github gist: https://gist.github.com/voor/b2dd473db296d9eae004
+RUN curl -L -H "Cookie: gpw_e24=xxx; oraclelicense=accept-securebackup-cookie;" http://download.oracle.com/otn-pub/java/jdk/8u45-b14/jdk-8u45-linux-x64.rpm -o /tmp/jdk-8u45-linux-x64.rpm && \
+    sudo dnf install -y /tmp/jdk-8u45-linux-x64.rpm && \
+    rm -rf jdk-8u45-linux-x64.rpm && \
     java -version
 
 # Define default command.
