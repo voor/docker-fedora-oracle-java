@@ -27,7 +27,7 @@ ENV JAVA_HOME /usr/java/latest
 ## Read more here: http://www.oracle.com/technetwork/java/javase/terms/license/index.html
 ## Based off the github gist: https://gist.github.com/voor/b2dd473db296d9eae004
 RUN curl -L -H "Cookie: gpw_e24=xxx; oraclelicense=accept-securebackup-cookie;" http://download.oracle.com/otn-pub/java/jdk/8u45-b14/jdk-8u45-linux-x64.rpm -o /tmp/jdk-8u45-linux-x64.rpm && \
-    md5sum -c <(printf "50ae04f69743921dd6082dfe978672ad /tmp/jdk-8u45-linux-x64.rpm") && \
+    printf "50ae04f69743921dd6082dfe978672ad /tmp/jdk-8u45-linux-x64.rpm" | md5sum -c && \
     dnf install -y /tmp/jdk-8u45-linux-x64.rpm && \
     rm -rf /tmp/jdk-8u45-linux-x64.rpm && \
     java -version
