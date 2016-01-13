@@ -22,14 +22,19 @@ FROM fedora:latest
 # Install Oracle Java 8
 ENV JAVA_VER 8
 ENV JAVA_HOME /usr/java/latest
+# Change me every time Java is updated.
+ENV JAVA_RPM jdk-8u66-linux-x64.rpm
+ENV JAVA_RPM_URL http://download.oracle.com/otn-pub/java/jdk/8u66-b17/$JAVA_RPM
+# Get the necessary hash, for example: https://www.oracle.com/webfolder/s/digest/8u66checksum.html
+ENV JAVA_HASH 159cf0b31396458e342835b57afa4b61
 
 ## You must accept the Oracle Binary Code License Agreement for Java SE to download this software.
 ## Read more here: http://www.oracle.com/technetwork/java/javase/terms/license/index.html
 ## Based off the github gist: https://gist.github.com/voor/b2dd473db296d9eae004
-RUN curl -L -H "Cookie: gpw_e24=xxx; oraclelicense=accept-securebackup-cookie;" http://download.oracle.com/otn-pub/java/jdk/8u45-b14/jdk-8u45-linux-x64.rpm -o /tmp/jdk-8u45-linux-x64.rpm && \
-    printf "50ae04f69743921dd6082dfe978672ad /tmp/jdk-8u45-linux-x64.rpm" | md5sum -c && \
-    dnf install -y /tmp/jdk-8u45-linux-x64.rpm && \
-    rm -rf /tmp/jdk-8u45-linux-x64.rpm && \
+RUN curl -L -H "Cookie: gpw_e24=xxx; oraclelicense=accept-securebackup-cookie;" $JAVA_RPM_URL -o /tmp/$JAVA_RPM && \
+    printf "$JAVA_HASH /tmp/$JAVA_RPM" | md5sum -c && \
+    dnf install -y /tmp/$JAVA_RPM && \
+    rm -rf /tmp/$JAVA_RPM && \
     java -version
 
 # Define default command.
